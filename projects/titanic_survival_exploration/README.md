@@ -51,3 +51,8 @@ The dataset used in this project is included as `titanic_data.csv`. This dataset
 
 **Target Variable**
 - `survival` : Survival (0 = No; 1 = Yes)
+
+### Additional @torenunez notes
+https://ipython.readthedocs.io/en/latest/install/kernel_install.html  
+source activate ipykernel_py2  
+jupyter notebook titanic_survival_exploration.ipynb 
