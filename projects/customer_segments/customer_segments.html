@@ -12046,6 +12046,102 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">percent_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">def</span> <span class="nf">show_percentiles</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">samples</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+        <span class="n">P</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">percentileofscore</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">c</span><span class="p">],</span><span class="n">samples</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">r</span><span class="p">]),</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">P</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">percent_dict</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">P</span>
+
+    <span class="n">percent_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">percent_dict</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;The percentile score of each product category for each record can be tabulated as follows: &#39;</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">percent_df</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">)])</span>
+
+    
+<span class="n">show_percentiles</span><span class="p">(</span><span class="n">data</span><span class="p">,</span>  <span class="n">samples</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The percentile score of each product category for each record can be tabulated as follows: 
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Fresh</th>
+      <th>Milk</th>
+      <th>Grocery</th>
+      <th>Frozen</th>
+      <th>Detergents_Paper</th>
+      <th>Delicatessen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>44.1</td>
+      <td>84.8</td>
+      <td>71.8</td>
+      <td>54.5</td>
+      <td>70.5</td>
+      <td>74.1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>59.1</td>
+      <td>77.3</td>
+      <td>85.7</td>
+      <td>6.6</td>
+      <td>88.4</td>
+      <td>3.3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>80.5</td>
+      <td>41.4</td>
+      <td>30.0</td>
+      <td>93.4</td>
+      <td>39.9</td>
+      <td>87.7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -12064,9 +12160,9 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
-<p>Record 0 could be an ice cream shop or cafe based on the large amount of milk they buy.</p>
-<p>Record 1 could be a super market based ont he large amount of groceries they buy and detergents_paper that they  buy.</p>
-<p>Record 2 could be a restaurant based on how much fresh produce they buy.</p>
+<p><em>Record 0</em> could be a discount store retailer based on the fact that they purchase large amounts across product categories with the exception Fresh products, which at 7,057 is below the mean of 12,000 and slightly above the 44th percentile.</p>
+<p><em>Record 1</em> could be a niche pharmacy and supermarket retailer based on the large amount of detergents_paper purchased and the extremly low amounts of delicastessen and frozen products purchased, showing at the 3.3 and 6.6 percentiles, respectively.</p>
+<p><em>Record 2</em> could be a large restaurant based on how much fresh produce, frozen, and delicatessen products purchased. All of which are above the 80th percentile in their respective category.</p>
 
 </div>
 </div>
@@ -12093,7 +12189,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span>
@@ -12160,7 +12256,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer:</strong> The grocery feature was selected as the target feature and the R^2 of 0.682 shows a good correlation. It may not be critical to include this feature to identify customer's spending habits because other features seem to correlate well with it. However, including this feature's information may improve the accuracy of the model.</p>
+<p><strong>Answer:</strong> The grocery feature was selected as the target feature and the R^2 of 0.682 indicates that we're able to partially predict this feature. It may not be critical to include this feature to identify customer's spending habits because other features probably correlate with it. However, because R^2 is not too strong, which indicates that this feature still contains valuable information and that including it will improve the accuracy of the model.</p>
 
 </div>
 </div>
@@ -12177,7 +12273,105 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[6]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Fresh</th>
+      <th>Milk</th>
+      <th>Grocery</th>
+      <th>Frozen</th>
+      <th>Detergents_Paper</th>
+      <th>Delicatessen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Fresh</th>
+      <td>1.000000</td>
+      <td>0.100510</td>
+      <td>-0.011854</td>
+      <td>0.345881</td>
+      <td>-0.101953</td>
+      <td>0.244690</td>
+    </tr>
+    <tr>
+      <th>Milk</th>
+      <td>0.100510</td>
+      <td>1.000000</td>
+      <td>0.728335</td>
+      <td>0.123994</td>
+      <td>0.661816</td>
+      <td>0.406368</td>
+    </tr>
+    <tr>
+      <th>Grocery</th>
+      <td>-0.011854</td>
+      <td>0.728335</td>
+      <td>1.000000</td>
+      <td>-0.040193</td>
+      <td>0.924641</td>
+      <td>0.205497</td>
+    </tr>
+    <tr>
+      <th>Frozen</th>
+      <td>0.345881</td>
+      <td>0.123994</td>
+      <td>-0.040193</td>
+      <td>1.000000</td>
+      <td>-0.131525</td>
+      <td>0.390947</td>
+    </tr>
+    <tr>
+      <th>Detergents_Paper</th>
+      <td>-0.101953</td>
+      <td>0.661816</td>
+      <td>0.924641</td>
+      <td>-0.131525</td>
+      <td>1.000000</td>
+      <td>0.069291</td>
+    </tr>
+    <tr>
+      <th>Delicatessen</th>
+      <td>0.244690</td>
+      <td>0.406368</td>
+      <td>0.205497</td>
+      <td>0.390947</td>
+      <td>0.069291</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Produce a scatter matrix for each pair of features in the data</span>
@@ -14830,8 +15024,14 @@ MzMzMzMzs7b8P6YbhZeIVDkmAAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer:</strong>
-Grocery and Detergents_Paper appear strongly correlated. Detergents_Paper and Milk, as well as Grocery and Milk also show somme correlation. This confirms my suspicion that including the grocery feature may not be necessary, but could nbe helpful. The distribution for all features in the scatter matrix do not look normally distributed. In fact, all these features look highly skewed in the positive direction, like a log-normal distribution.</p>
+<p><strong>Answer:</strong></p>
+<p><em>Highest correlations:</em></p>
+<ul>
+<li>Grocery - Detergents_Paper: 0.92</li>
+<li>Grocery - Milk: 0.73</li>
+<li>Milk - Detergents_Paper: 0.66</li>
+</ul>
+<p>Grocery and Detergents_Paper appear strongly correlated. Detergents_Paper and Milk, as well as Grocery and Milk also show some correlation. This confirms my suspicion that including the grocery feature may not be necessary, but could be helpful. The distribution for all features in the scatter matrix do not look normally distributed. In fact, all these features look highly skewed in the positive direction, like a log-normal distribution.</p>
 
 </div>
 </div>
@@ -14863,7 +15063,7 @@ Grocery and Detergents_Paper appear strongly correlated. Detergents_Paper and Mi
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Scale the data using the natural logarithm</span>
@@ -20472,7 +20672,7 @@ QmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Display the log-transformed sample data</span>
@@ -20563,7 +20763,7 @@ Once you have performed this implementation, the dataset will be stored in the v
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
@@ -21259,7 +21459,7 @@ Once you have performed this implementation, the dataset will be stored in the v
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
-Five data points were removed because the data point was an outlier for at least 2 features. I figured that if a point was only an outlier for a single feature, the information it would provide to the model through the other features would still be valuable. However, if the data point was an outlier in more than one feature, then maybe the data for the entire data point is flawed.</p>
+Five data points were removed because the data point was an outlier for at least 2 features. I figured that if a point was only an outlier for a single feature, the information it would provide to the model through the other features would still be valuable. However, if the data point was an outlier in more than one feature, then maybe the data for the entire data point is flawed. Errors in the data set could exert too much leverage on any model or feature transformation that could be later applied. For example, these points could increase the intracluster distance and change the position of cluster centers.</p>
 
 </div>
 </div>
@@ -21291,7 +21491,7 @@ Five data points were removed because the data point was an outlier for at least
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
@@ -21904,7 +22104,7 @@ JEmSJEmqsGgkSZIkSZKkiv8DX7lcXqi8o3UAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">]:</span>
@@ -21950,7 +22150,7 @@ Variance explained by the first 6 components is 1.0000.
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
 <p>The first two principal components explain 71% of the variance while the first four principle components explain 93% of the variance.</p>
-<p>The first component is dominated by negative correlation to detergents_paper and grocery and slight positive correlation to fresh and frozen products. This may be interpreted as how closely the customer exhibits spending behavior of a small neighborhood restaurant. The second dimension has all negative components, specifically fresh, frozen, and delicatessen. This may be interpreted as the behavior for a small retail store like a pharmacy which carries many non-food related items. The third component has a postive correlation for frozen and delicatessen and a negative correlation to fresh produts. This customer spending behavior is similar to that of a deli. Finally the fourth dimension has a strong positive frozen correlation and negative delicatessen correlation, which may be related to the spending behavior of larger industrial wholesale distribution customers.</p>
+<p>The first component is dominated by negative correlation to detergents_paper and grocery and slight positive correlation to fresh and frozen products. This may be interpreted as how closely the customer exhibits spending behavior of a small neighborhood restaurant with low total purchasing volume. The second dimension has all negative components, specifically fresh, frozen, and delicatessen. This may be interpreted as the behavior for a small retail store like a pharmacy which carries many non-food related items. The third component has a postive correlation for frozen and delicatessen and a negative correlation to fresh produts. This customer spending behavior is similar to that of a deli. Finally the fourth dimension has a strong positive frozen correlation and negative delicatessen correlation, which may be related to the spending behavior of larger industrial wholesale distribution customers.</p>
 
 </div>
 </div>
@@ -21967,7 +22167,7 @@ Variance explained by the first 6 components is 1.0000.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Display sample log-data after having a PCA transformation applied</span>
@@ -22055,7 +22255,7 @@ Variance explained by the first 6 components is 1.0000.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Apply PCA by fitting the good data with only two dimensions</span>
@@ -22089,7 +22289,7 @@ Variance explained by the first 6 components is 1.0000.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Display sample log-data after applying PCA transformation in two dimensions</span>
@@ -22156,7 +22356,7 @@ Variance explained by the first 6 components is 1.0000.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Create a biplot</span>
@@ -22171,11 +22371,11 @@ Variance explained by the first 6 components is 1.0000.
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fe9a38685d0&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f56c233bb10&gt;</pre>
 </div>
 
 </div>
@@ -23860,8 +24060,8 @@ fXr2+qBiAAAAAElFTkSuQmCC
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
-<p>K-Means is easier to implement and interpret. However, there may be certain points that are far from the centroid but still assigned to the cluster. Especailly because K-Means is non-deterministic, these outliers may change clusters depending on the seed. Some points may be difficult to categorize and K-means does not provide a way to express the uncertainty with which a point is assigned to a cluster. On the other hand, Gaussian Mixture Modeling will express this uncertainty. Managing this uncertainty may make the clustering more difficult to both implement and interpret.</p>
-<p>So far, I feel like it will be difficult to conclusively determine whether a record belongs in a specific cluster or segment. It might be useful to determine which customers fit squarely within a segment and which customers do not. Therefore, I am choosing to use the Gaussian Mixture Model.</p>
+<p>K-Means is easier to implement and interpret and it's faster. However, there may be certain points that are far from the centroid and close to the decision boundary, but still assigned to a cluster. Especailly because K-Means is non-deterministic, these outliers may change clusters depending on the seed. These data points are difficult to categorize and K-means does not provide a way to express the uncertainty with which a point is assigned to a cluster.</p>
+<p>On the other hand, Gaussian Mixture Modeling can express this uncertainty through confidence levels. However, managing this uncertainty may make the clustering more difficult to both implement and interpret. So far, I feel like it will be difficult to conclusively determine whether a record belongs in a specific cluster or segment. It might be useful to determine which customers fit squarely within a segment and which customers loosely fit within a segment with lower confidence. Therefore, I am choosing to use the Gaussian Mixture Model.</p>
 
 </div>
 </div>
@@ -23889,7 +24089,7 @@ fXr2+qBiAAAAAElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
@@ -23957,7 +24157,7 @@ fXr2+qBiAAAAAElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Apply your clustering algorithm of choice to the reduced data </span>
@@ -24005,7 +24205,7 @@ fXr2+qBiAAAAAElFTkSuQmCC
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
-The best score is when k = 2, with a silhouette score of 0.426.</p>
+The best score is when k = 2, with a silhouette score of 0.422.</p>
 
 </div>
 </div>
@@ -24022,7 +24222,7 @@ The best score is when k = 2, with a silhouette score of 0.426.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Display the results of the clustering from implementation</span>
@@ -25190,7 +25390,7 @@ QmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Inverse transform the centers</span>
@@ -25260,6 +25460,75 @@ QmCC
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">show_percentiles</span><span class="p">(</span><span class="n">data</span><span class="p">,</span>  <span class="n">true_centers</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The percentile score of each product category for each record can be tabulated as follows: 
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Fresh</th>
+      <th>Milk</th>
+      <th>Grocery</th>
+      <th>Frozen</th>
+      <th>Detergents_Paper</th>
+      <th>Delicatessen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>52.3</td>
+      <td>34.3</td>
+      <td>34.3</td>
+      <td>58.2</td>
+      <td>32.3</td>
+      <td>41.4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>28.0</td>
+      <td>78.6</td>
+      <td>80.2</td>
+      <td>30.9</td>
+      <td>80.2</td>
+      <td>49.8</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -25277,7 +25546,8 @@ QmCC
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
-<p>A customer that is assigned to Cluster 0 is positively correlated with PCA dimension 1 while a customer that is assigned to Cluster 1 is negatively correlated with PCA dimension 1. Cluster 0 has a large spend on Fresh products, while cluster 1 has a large spend in delicatessen and grocery products. This makes me think that Cluster 0 may be well represented by restaurants, because they will prepare the meals. On the other hand, pre-processed foods and other groceries may be better represented by retail stores.</p>
+<p>As seen in the cluster visualization, both cluster centers have similar Dimension 2 values close to zero but are primarily separated by Dimension 1. Cluster 0 is associated with positive values along Dimension 1 while Cluster 1 is associated with negative values along Dimension 1. As mentioned before, Dimension 1 can be losely described as the spending behavior of a small neighborhood restaurant with low total purchasing volume. Cluster 0 is along the positive side of Dimenstion 1 while Cluster 1 is along the negative side of Dimension 1. This means means that Cluster 0 has small neighborhood restaurant behavior and Cluster 1 does not.</p>
+<p>This is further supported by looking at the totals of each product category independently and comparing it with the statistical distributions of the entire data set.Cluster 0 has a relatively large spend on Fresh and Frozen products, at the 52nd and 58th percentile, respectively.The rest of the product categories show relatively low totals, making me think that the size of the customers in this segment is relatively small. This confirms that Cluster 0 may be well represented by restaurants, because they will prepare the meals with fresh products.On the other hand, Cluster 1 has a very large spend in milk, grocery, and detergents_paper. This also confirms that Cluster 1 may be closer to retail stores because most of high-volume product categories are pre-processed. The Detergents_Paper, for example, is above the 80th percentile.</p>
 
 </div>
 </div>
@@ -25295,7 +25565,7 @@ QmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Display the predictions</span>
@@ -25326,7 +25596,7 @@ Sample point 2 predicted to be in Cluster 0
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
@@ -25400,7 +25670,7 @@ Sample point 2 predicted to be in Cluster 0
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer:</strong> Yes, these seem consistent. Sample point 0 and 1 have a larte spend on detergents_paper and othe pre-processed products, supporting the hypothesis that they may be retail chains. On the other hand, sample point 2 is predicted to be in Cluster 0 and has a large spend on fresh products, supporting the hypothesis that it may be a restaurant.</p>
+<p><strong>Answer:</strong> Yes, these seem consistent. Sample point 0 and 1 have a large spend on detergents_paper and othe pre-processed products, supporting the hypothesis that they may be retail chains. On the other hand, sample point 2 is predicted to be in Cluster 0 and has a large spend on fresh products, supporting the hypothesis that it may be a restaurant.</p>
 
 </div>
 </div>
@@ -25441,7 +25711,7 @@ Sample point 2 predicted to be in Cluster 0
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
-<p>I would randomly select customers from each cluster/group to create a test group with the change to delivery service and control group with the same delivery service. At that point, the sample size for each of the two test would be close to 200 subjects and some form of restricted randomization, like statified randomization <a href="https://onlinecourses.science.psu.edu/stat509/book/export/html/64">stratified randomization</a> may be useful. The dependent variable in each cluster/groupo would be the "positive reaction" would be measured be it via sales or survey-based customer sentiment metrics. Then test statistics, like a t-test, can be performed to see if there is a statistically significant difference between the mean response between each group's test and control. Furthermore, if both tests determine that each cluster/group had a statistically significant difference between the test and control group, the magnitude of the difference can also be compared against both groups.</p>
+<p>I would randomly select customers from each cluster/group to create a test group with the change to delivery service and control group with the same delivery service. The dependent variable in each cluster/groupwould be the "positive reaction" would be measured be it via sales or survey-based customer sentiment metrics. Then test statistics, like a t-test, can be performed to see if there is a statistically significant difference between the mean response between each group's test and control. Furthermore, if both tests determine that each cluster/group had a statistically significant difference between the test and control group, the magnitude of the difference can also be compared against both groups.</p>
 
 </div>
 </div>
@@ -25465,6 +25735,7 @@ Sample point 2 predicted to be in Cluster 0
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
 <p>A simple approach would be to use the features of each new customer to calculate its euclidean distance from the centroid of mean of the previously identified cluster/segment. A more rigorous approach would be to apply a supervised learning algorithm, like a random forest, on the previous data using the cluster/segment as the target variable.</p>
+<p>Furthermore, the target variable could also be defined as the affinity for a schedule and one of the input variables could be the cluster/segment. In this case, the cluster/segment can be used as an engineered feature that helps predict the affinity or attractiveness of a certain delivery schedule, which could be modeled as a categorical or continuous variable, using a classification or regression model.</p>
 
 </div>
 </div>
@@ -25482,7 +25753,7 @@ Sample point 2 predicted to be in Cluster 0
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">vs</span><span class="o">.</span><span class="n">cluster_results</span><span class="p">(</span><span class="n">reduced_data</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">pca_samples</span><span class="p">)</span>
@@ -26634,7 +26905,7 @@ QmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Display the clustering results based on &#39;Channel&#39; data</span>
@@ -27806,7 +28077,7 @@ AABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">full_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;customers.csv&quot;</span><span class="p">)</span>
@@ -27828,7 +28099,7 @@ AABJRU5ErkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[25]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[26]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -27894,7 +28165,7 @@ AABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">confusion_matrix</span>
@@ -27929,7 +28200,7 @@ AABJRU5ErkJggg==
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
-My clustering algorithm chose 2 clusters, which is the number of channels in the original data set. Cluster 0 is very close to the Hotel/Restaurant/Cafe segment and Cluster 1 is very close to the Retailer segment. In fact, the unsupervised clusters and the segments are 90% similar as calculated by the confusion matrix above.</p>
+My clustering algorithm chose 2 clusters, which is the number of channels in the original data set. Cluster 0 is very close to the Hotel/Restaurant/Cafe segment and Cluster 1 is very close to the Retailer segment. In fact, the unsupervised clusters and the hidden segments are 90% similar as calculated by the confusion matrix above.</p>
 <p>Furthermore, as noted in the table above, when the unsupervised clusters and the original segments are NOT in alignment, the Gaussian Mixture Model (GMM) had assigned the customer to its respective cluster with notably lower probability/confidence. This further supports the consistency with these classifications.</p>
 
 </div>
