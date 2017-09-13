@@ -101,7 +101,10 @@ class LearningAgent(Agent):
         # Set the agent state and default action
         self.state = state
         self.next_waypoint = self.planner.next_waypoint()
-        action = None
+        # action = None
+        action = random.choice([None, 'left', 'right', 'forward'])
+
+
 
         ########### 
         ## TO DO ##
