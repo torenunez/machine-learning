@@ -263,6 +263,9 @@ class Environment(object):
         """ Consider an action and perform the action if it is legal.
             Receive a reward for the agent based on traffic laws. """
 
+        if action not in self.valid_actions:
+            print 'Invalid action is: ', action
+
         assert agent in self.agent_states, "Unknown agent!"
         assert action in self.valid_actions, "Invalid action!"
 
