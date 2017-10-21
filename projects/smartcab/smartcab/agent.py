@@ -25,7 +25,6 @@ class LearningAgent(Agent):
         # Set any additional class parameters as needed
         self.t = 0
 
-
     def reset(self, destination=None, testing=False):
         """ The reset function is called at the beginning of each trial.
             'testing' is set to True if testing trials are being used
@@ -209,7 +208,7 @@ def run():
     #    * alpha   - continuous value for the learning rate, default is 0.5
 
     # agent = env.create_agent(LearningAgent, learning=True) # default
-    agent = env.create_agent(LearningAgent, learning=True, epsilon=1.0, alpha=0.002)
+    agent = env.create_agent(LearningAgent, learning=True, epsilon=1.0, alpha=0.02)
     
     ##############
     # Follow the driving agent
@@ -235,7 +234,7 @@ def run():
     #   n_test     - discrete number of testing trials to perform, default is 0
 
     # sim.run(n_test=10) # default
-    sim.run(tolerance=0.01, n_test=100)
+    sim.run(tolerance=0.01, n_test=10)
 
 
 if __name__ == '__main__':
